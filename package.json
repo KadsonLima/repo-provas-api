@@ -6,7 +6,7 @@
   "scripts": {
 	"build": "tsc && npx prisma generate && npx prisma migrate deploy",
     "test": "dotenv -e .env.test prisma migrate reset --force && dotenv -e .env.test jest --runInBandjest --detectOpenHandles",
-    "start": "ts-node src/server.ts",
+    "start": "node src/server.ts",
     "dev": "nodemon src/server.ts"
   },
   "keywords": [],
