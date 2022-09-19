@@ -8,6 +8,6 @@ const authRouter = Router();
 
 
 authRouter.post("/sign-up",schemaValidateMiddleware(signUpSchema), signUp);
-authRouter.get("/sign-in",schemaValidateMiddleware(signInSchema), signIn);
+authRouter.post("/sign-in",schemaValidateMiddleware(signInSchema), signIn);
 
 export default authRouter

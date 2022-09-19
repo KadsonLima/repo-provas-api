@@ -1,9 +1,16 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from 'bcrypt';
+const BCRYPT_SECRET = Number(process.env.BCRYPT_SECRET)
 const prisma = new PrismaClient();
 
-
 const main = async () => {
-
+  const user = [
+		{
+			name: "kadson",
+			email: "kadson@gmail.com",
+			password: bcrypt.hashSync('kadson', BCRYPT_SECRET),
+		},
+	]
   const terms = [
     {
       number: 1,
@@ -95,6 +102,7 @@ const main = async () => {
       disciplineId: 6,
     },
   ];
+  await prisma.user.createMany({ data: user })
   await prisma.terms.createMany({ data: terms });
   await prisma.categories.createMany({ data: categories });
   await prisma.teacher.createMany({ data: teachers });

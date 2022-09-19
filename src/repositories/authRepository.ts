@@ -6,6 +6,10 @@ export interface SignUpBody{
     password:string
     
 }
+const getByEmail = async (email: string) => {
+	return prisma.user.findUnique({ where: { email } })
+}
+
 
 export type SignInBody = Omit<SignUpBody, "name">
 
@@ -22,4 +26,4 @@ async function findUser({email}:SignInBody) {
         where: {email}
     })
 }
-export {createUser, findUser}
+export {createUser, findUser, getByEmail}

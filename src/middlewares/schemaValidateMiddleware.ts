@@ -4,10 +4,11 @@ import { NextFunction, Request, Response } from "express"
 const schemaValidateMiddleware = (schema: ObjectSchema) => {
 	return (req: Request, res: Response, next: NextFunction) => {
 		const { error } = schema.validate(req, { abortEarly: false })
-		if (error)
+		if (error){
 			return res
 				.status(422)
 				.send(error.details.map(({ message }) => message))
+			}
 		next()
 	}
 }

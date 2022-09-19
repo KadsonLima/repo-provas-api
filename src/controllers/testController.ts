@@ -6,12 +6,14 @@ const registerTest = async(req:Request, res:Response) =>{
 
     const testData:{name:string, pdfUrl:string, categoryId:number, teacherId:number, disciplineId:number} = req.body
 
+	console.log("teacher id ", testData.teacherId, "discipline id ", testData.disciplineId)
+
     const result = await testService.registerTest(testData)
     res.status(201).send(result)
 
 }
 
-const getTest = async(req:Request, res:Response) =>{
+const getTestsCategories = async(req:Request, res:Response) =>{
 
 
     const result = await testService.getTest()
@@ -19,7 +21,7 @@ const getTest = async(req:Request, res:Response) =>{
 
 }
 
-const getGroupByTeachers = async(req:Request, res:Response) =>{
+const getGroupedTests = async(req:Request, res:Response) =>{
 
 
     const result = await testService.getGroupByTeachers()
@@ -29,4 +31,4 @@ const getGroupByTeachers = async(req:Request, res:Response) =>{
 
 
 
-export {registerTest, getTest, getGroupByTeachers}
+export {registerTest, getTestsCategories, getGroupedTests}

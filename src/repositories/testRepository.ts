@@ -17,6 +17,8 @@ async function createTest({
   teacherId,
   disciplineId,
 }: TestBody) {
+
+
   const teacherDisciplineId = await findTeacherDiscipline(
     teacherId,
     disciplineId
@@ -27,42 +29,53 @@ async function createTest({
       name,
       pdfUrl,
       categoryId,
-      teacherDisciplineId: teacherDisciplineId?.id,
+      teacherDisciplineId: teacherDisciplineId.id,
     },
   });
 }
 
 async function findTeacherDiscipline(teacherId: number, disciplineId: number) {
-  console.log("teste 2");
 
   const result = await prisma.teachersDisciplines.findFirst({
     where: { teacherId, disciplineId },
   });
 
-  if (!result) throw { code: 404 };
+  if (!result) throw { code: 401 };
 
   return result;
 }
 
 async function getTestsForTerms() {
   const result = await prisma.terms.findMany({
-    orderBy: { number: "asc" },
-    select: {
-      id: true,
-      number: true,
-      Disciplines: {
-        select: {
-          id: true,
-          TeacherDisciplines: {
-            select: {
-              disciplines: { select: { name: true } },
-              teacher: { select: { name: true } },
-            },
-          },
-        },
-      },
-    },
-  });
+		orderBy: { number: "asc" },
+		select: {
+			id: true,
+			number: true,
+			Disciplines: {
+				select: {
+					id: true,
+					name: true,
+					TeacherDisciplines: {
+						select: {
+							disciplines: { select: { name: true } },
+							teacher: { select: { name: true } },
+							Tests: {
+								select: {
+									id: true,
+									name: true,
+									pdfUrl: true,
+									createdAt: true,
+									category: {
+										select: { id: true, name: true },
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	})
 
   if (!result) throw { code: 404 };
 
